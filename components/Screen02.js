@@ -6,13 +6,15 @@ import {
     FlatList,
     Image,
     TouchableOpacity,
-    SafeAreaView
+    SafeAreaView,
+    ScrollView,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useFonts } from 'expo-font';
 import { fetchBikes, setSelectedCategory } from '../store/bikesSlice';
 import AddBikeModal from './AddBikeModal';
+// import { ScrollView } from 'react-native-web';
 
 const BikeShop = ({ navigation }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -84,7 +86,7 @@ const BikeShop = ({ navigation }) => {
     );
 
     return (
-        <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.container}>
             <Text style={styles.title}>The world's Best Bike</Text>
             
             <TouchableOpacity 
@@ -112,7 +114,7 @@ const BikeShop = ({ navigation }) => {
                 visible={isModalVisible}
                 onClose={() => setIsModalVisible(false)}
             />
-        </SafeAreaView>
+        </ScrollView>
     );
 };
 
