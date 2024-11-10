@@ -1,0 +1,58 @@
+[
+  {
+    "id": "1",
+    "name": "Pinarello",
+    "price": 1800,
+    "image": "https://github.com/dhlananhh/KiemTraThucHanhMobile/blob/main/assets/images/bike-1.png",
+    "category": "Mountain"
+  },
+  {
+    "id": "2",
+    "name": "Pina Mountai",
+    "price": 1700,
+    "image": "https://github.com/dhlananhh/KiemTraThucHanhMobile/blob/main/assets/images/bike-2.png",
+    "category": "Mountain"
+  },
+  {
+    "id": "3",
+    "name": "Pina Bike",
+    "price": 1500,
+    "image": "https://github.com/dhlananhh/KiemTraThucHanhMobile/blob/main/assets/images/bike-3.png",
+    "category": "Roadbike"
+  },
+  {
+    "id": "4",
+    "name": "Pinarello",
+    "price": 1900,
+    "image": "https://github.com/dhlananhh/KiemTraThucHanhMobile/blob/main/assets/images/bike-4.png",
+    "category": "Roadbike"
+  },
+  {
+    "id": "5",
+    "name": "Pinarello",
+    "price": 2700,
+    "image": "https://github.com/dhlananhh/KiemTraThucHanhMobile/blob/main/assets/images/bike-3.png",
+    "category": "Mountain"
+  },
+  {
+    "id": "6",
+    "name": "Pinarello",
+    "price": 1350,
+    "image": "https://github.com/dhlananhh/KiemTraThucHanhMobile/blob/main/assets/images/bike-2.png",
+    "category": "Mountain"
+  },
+  {
+    "name": "Roller-Coaster Bike",
+    "price": 5000,
+    "image": "https://example.com/placeholder.jpg",
+    "category": "Mountain",
+    "id": "7"
+  },
+  {
+    "name": "Candy Bike",
+    "price": 200,
+    "image": "https://example.com/placeholder.jpg",
+    "category": "RoadBike",
+    "id": "8"
+  }
+]
