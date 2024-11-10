@@ -8,38 +8,42 @@ import {
     TouchableOpacity,
     SafeAreaView
 } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useFonts } from 'expo-font';
+import { fetchBikes, setSelectedCategory } from '../store/bikesSlice';
+import AddBikeModal from './AddBikeModal';
 
-
-// Component: BikeShop
 const BikeShop = ({ navigation }) => {
-    const [name, setName] = useState(''); 
-    const [bikes, setBikes] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState('All');
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const dispatch = useDispatch();
+    const { items, status, error, selectedCategory } = useSelector(state => state.bikes);
 
     const [fontsLoaded] = useFonts({
         'Ubuntu-Bold': require('../assets/fonts/Ubuntu-Bold.ttf'),
         'Voltaire-Regular': require('../assets/fonts/Voltaire-Regular.ttf'),
     });
 
-    const filteredBikes = selectedCategory === 'All' ? bikes : bikes.filter(bike => bike.category === selectedCategory);
-
     useEffect(() => {
-        // Mock data
-        const mockData = [
-            { id: '1', name: 'Pinarello', price: 1800, image: require('../assets/images/bike-1.png'), category: 'Mountain' },
-            { id: '2', name: 'Pina Mountai', price: 1700, image: require('../assets/images/bike-2.png'), category: 'Mountain' },
-            { id: '3', name: 'Pina Bike', price: 1500, image: require('../assets/images/bike-3.png'), category: 'Roadbike' },
-            { id: '4', name: 'Pinarello', price: 1900, image: require('../assets/images/bike-4.png'), category: 'Roadbike' },
-            { id: '5', name: 'Pinarello', price: 2700, image: require('../assets/images/bike-3.png'), category: 'Mountain' },
-            { id: '6', name: 'Pinarello', price: 1350, image: require('../assets/images/bike-2.png'), category: 'Mountain' },
-        ];
-        setBikes(mockData);
-    }, []);
+        if (status === 'idle') {
+            dispatch(fetchBikes());
+        }
+    }, [status, dispatch]);
+
+    const filteredBikes = selectedCategory === 'All' 
+        ? items 
+        : items.filter(bike => bike.category === selectedCategory);
 
     if (!fontsLoaded) {
-        return null; // or a loading indicator
+        return null;
+    }
+
+    if (status === 'loading') {
+        return <Text>Loading...</Text>;
+    }
+
+    if (status === 'failed') {
+        return <Text>Error: {error}</Text>;
     }
 
     const renderBikeItem = ({ item }) => (
@@ -47,7 +51,11 @@ const BikeShop = ({ navigation }) => {
             <TouchableOpacity style={styles.heartIcon}>
                 <AntDesign name="heart" size={25} color="#E8D9D9" style={styles.heartIcon} />
             </TouchableOpacity>
-            <Image source={item.image} style={styles.bikeImage} />
+            <Image 
+                source={{ uri: item.image }} 
+                style={styles.bikeImage} 
+                defaultSource={require('../assets/images/bike-1.png')}
+            />
             <Text style={styles.bikeName}>{item.name}</Text>
             <Text style={styles.bikePrice}>
                 <Text style={styles.currencySymbol}>$</Text>
@@ -62,7 +70,7 @@ const BikeShop = ({ navigation }) => {
                 styles.categoryButton,
                 selectedCategory === category && styles.selectedCategoryButton,
             ]}
-            onPress={() => setSelectedCategory(category)}
+            onPress={() => dispatch(setSelectedCategory(category))}
         >
             <Text
                 style={[
@@ -78,14 +86,20 @@ const BikeShop = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.title}>The world's Best Bike</Text>
-            <TouchableOpacity style={styles.btnAddNewBike}>
+            
+            <TouchableOpacity 
+                style={styles.btnAddNewBike}
+                onPress={() => setIsModalVisible(true)}
+            >
                 <Text style={styles.addNewBikeText}>Add New Bike</Text>
             </TouchableOpacity>
+
             <View style={styles.categoryContainer}>
                 {renderCategoryButton('All')}
                 {renderCategoryButton('Roadbike')}
                 {renderCategoryButton('Mountain')}
             </View>
+
             <FlatList
                 data={filteredBikes}
                 renderItem={renderBikeItem}
@@ -93,9 +107,18 @@ const BikeShop = ({ navigation }) => {
                 numColumns={2}
                 columnWrapperStyle={styles.bikeList}
             />
+
+            <AddBikeModal 
+                visible={isModalVisible}
+                onClose={() => setIsModalVisible(false)}
+            />
         </SafeAreaView>
     );
 };
+
+// Styles remain the same as in your original file
+
+
 
 const styles = StyleSheet.create({
     container: {
