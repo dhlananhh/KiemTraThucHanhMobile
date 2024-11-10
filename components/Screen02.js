@@ -42,8 +42,6 @@ const BikeShop = ({ navigation }) => {
         return null; // or a loading indicator
     }
 
-    const filteredBikes = selectedCategory === 'All' ? bikes : bikes.filter(bike => bike.category === selectedCategory);
-
     const renderBikeItem = ({ item }) => (
         <View style={styles.bikeItem}>
             <TouchableOpacity style={styles.heartIcon}>
