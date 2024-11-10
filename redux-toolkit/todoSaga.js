@@ -14,7 +14,7 @@ import {
     deleteTodoRequest,
     deleteTodoSuccess,
     deleteTodoFailure,
-} from './todoSlice';
+} from './bikeShopSlice';
 
 const API_URL = 'https://jsonplaceholder.typicode.com/todos';
 

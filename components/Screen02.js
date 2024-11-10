@@ -13,7 +13,8 @@ import { useFonts } from 'expo-font';
 
 
 // Component: BikeShop
-const BikeShop = () => {
+const BikeShop = ({ navigation }) => {
+    const [name, setName] = useState(''); 
     const [bikes, setBikes] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('All');
 
@@ -21,6 +22,8 @@ const BikeShop = () => {
         'Ubuntu-Bold': require('../assets/fonts/Ubuntu-Bold.ttf'),
         'Voltaire-Regular': require('../assets/fonts/Voltaire-Regular.ttf'),
     });
+
+    const filteredBikes = selectedCategory === 'All' ? bikes : bikes.filter(bike => bike.category === selectedCategory);
 
     useEffect(() => {
         // Mock data
@@ -77,6 +80,9 @@ const BikeShop = () => {
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.title}>The world's Best Bike</Text>
+            <TouchableOpacity style={styles.btnAddNewBike}>
+                <Text style={styles.addNewBikeText}>Add New Bike</Text>
+            </TouchableOpacity>
             <View style={styles.categoryContainer}>
                 {renderCategoryButton('All')}
                 {renderCategoryButton('Roadbike')}
@@ -98,6 +104,21 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFFFFF',
         padding: 15,
+        // flexDirection: 'column',
+    },
+    btnAddNewBike: {
+        width: 150,
+        height: 40,
+        backgroundColor: '#E94141',
+        borderRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    addNewBikeText: {
+        fontFamily: 'Voltaire-Regular',
+        fontSize: 20,
+        color: '#FFFFFF',
     },
     title: {
         fontFamily: 'Ubuntu-Bold',

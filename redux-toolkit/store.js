@@ -1,16 +1,9 @@
+// redux/store.js
 import { configureStore } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
-import rootReducer from './rootReducer'; // We will create this file later
-import rootSaga from './sagas'; // We will create this file later
+import bikeShopReducer from './bikeShopSlice'; // Create this slice
 
-const sagaMiddleware = createSagaMiddleware();
-
-const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => 
-    getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
+export const store = configureStore({
+  reducer: {
+    bikes: bikeShopReducer, // Use your bikeShopReducer here
+  },
 });
-
-sagaMiddleware.run(rootSaga);
-
-export default store;
